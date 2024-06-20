@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Device;
 use App\Models\User;
+use App\Models\ConfigHeater;
+use App\Models\ConfigLamp;
 
 class DeviceController extends Controller
 {
@@ -49,6 +51,16 @@ class DeviceController extends Controller
             $device->user_id = $request->user_id;
             $device->name = $request->name;   
             $device->save();
+
+            // When add device auto create config heater
+            $heater = new ConfigHeater;
+            $heater->device_id = $request->id;
+            $heater->save();
+            
+            // and auto create config lamp
+            $lamp = new ConfigLamp;
+            $lamp->device_id = $request->id;
+             $lamp->save();
 
             toastr()->success("Device Created Successfully");
             return redirect()->route('manage.devices.index');
@@ -107,6 +119,15 @@ class DeviceController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $device = Device::find($id);
+
+        $heater = ConfigHeater::where('device_id',$id)->first();
+        $lamp = ConfigLamp::where('device_id',$id)->first();
+
+        $lamp->delete();
+        $heater->delete();
+        $device->delete();
+        toastr()->success("Device deleted successfully");
+        return redirect()->back();
     }
 }
