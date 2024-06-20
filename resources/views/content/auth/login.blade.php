@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('title', 'Login | Broiler Guard')
+@section('title', 'Login | ChickDev')
 
 @section('body')
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
@@ -15,7 +15,7 @@
                                 <a href="{{ url('/')}}" class="text-nowrap logo-img text-center d-block py-3 w-100">
                                     <img src="{{ asset('logo/light-theme.png') }}" alt="" width="180px">
                                 </a>
-                                <p class="text-center">Broiler Guard helps you manage your farm</p>
+                                <!-- <p class="text-center">Broiler Guard helps you manage your farm</p> -->
                                 @error('auth')
                                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                   {{$message}}
